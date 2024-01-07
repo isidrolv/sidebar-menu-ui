@@ -1,0 +1,24 @@
+<ng-container *ngFor="let menuItem of menuItems">
+
+  <ng-container *ngIf="menuItem.isRoot; else subMenu">
+    <mat-list-item routerLink="{{menuItem.route}}">
+      <mat-icon>{{menuItem.icon}} </mat-icon>
+      <a><span>{{menuItem.name}}</span></a>
+    </mat-list-item>
+  </ng-container>
+  <ng-template #subMenu>
+    <mat-expansion-panel *ngIf="isSubMenu(menuItem)" [class.mat-elevation-z0]="true"
+                         class="app-sidenav">
+      <mat-expansion-panel-header>
+        <mat-icon>{{menuItem.icon}}</mat-icon>
+        <span>{{menuItem.name}}</span>
+      </mat-expansion-panel-header>
+      <mat-nav-list>
+        <mat-list-item *ngFor="let subItem of menuItem.children" [routerLink]="subItem.route">
+          <mat-icon>{{subItem.icon}}</mat-icon>
+          <span>{{subItem.name}}</span>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-expansion-panel>
+  </ng-template>
+</ng-container>
