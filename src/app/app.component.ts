@@ -10,7 +10,8 @@ import {SidebarMenuComponent} from "./components/sidebar-menu/sidebar-menu.compo
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MatSidenavModule, MatToolbarModule, MatIconModule, MatButtonModule, SidebarMenuComponent],
+  imports: [CommonModule, RouterOutlet, MatSidenavModule, MatToolbarModule,
+    MatIconModule, MatButtonModule, SidebarMenuComponent],
   template: '<app-sidebar-menu></app-sidebar-menu>',
   styleUrl: './app.component.css'
 })

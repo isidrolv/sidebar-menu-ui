@@ -26,7 +26,7 @@ export class DynMatListItemComponent {
 
 
   isSubMenu(menuItem: MenuItem): boolean | undefined {
-    return !menuItem.isRoot && menuItem.hasChildren && menuItem.children!=null && menuItem.children.length>0
+    return menuItem.hasChildren && menuItem.children!=null && menuItem.children.length>0
   }
 
 }

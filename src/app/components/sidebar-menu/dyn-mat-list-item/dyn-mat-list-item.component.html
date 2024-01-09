@@ -1,23 +1,20 @@
 <ng-container *ngFor="let menuItem of menuItems">
 
-  <ng-container *ngIf="menuItem.isRoot; else subMenu">
+  <ng-container *ngIf="menuItem.isRoot && !menuItem.hasChildren; else subMenu">
     <mat-list-item routerLink="{{menuItem.route}}">
-      <mat-icon>{{menuItem.icon}} </mat-icon>
-      <a><span>{{menuItem.name}}</span></a>
+      <mat-icon>{{menuItem.icon}}</mat-icon>
+      <a class="full-width"><span>{{menuItem.name}}</span></a>
     </mat-list-item>
   </ng-container>
   <ng-template #subMenu>
     <mat-expansion-panel *ngIf="isSubMenu(menuItem)" [class.mat-elevation-z0]="true"
-                         class="app-sidenav">
-      <mat-expansion-panel-header>
+                         class="expansion-panel">
+      <mat-expansion-panel-header style="padding-left: 15px ">
         <mat-icon>{{menuItem.icon}}</mat-icon>
-        <span>{{menuItem.name}}</span>
+        <a class="full-width"><span>{{menuItem.name}}</span></a>
       </mat-expansion-panel-header>
       <mat-nav-list>
-        <mat-list-item *ngFor="let subItem of menuItem.children" [routerLink]="subItem.route">
-          <mat-icon>{{subItem.icon}}</mat-icon>
-          <span>{{subItem.name}}</span>
-        </mat-list-item>
+        <app-dyn-mat-list-item [menuItems]="menuItem.children"></app-dyn-mat-list-item>
       </mat-nav-list>
     </mat-expansion-panel>
   </ng-template>

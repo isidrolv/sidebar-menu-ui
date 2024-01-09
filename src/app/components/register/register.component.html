@@ -1,0 +1,75 @@
+<div class="register-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Register</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div fxLayout="row">
+
+            <mat-form-field fxlayout="row">
+              <input matInput placeholder="Username" formControlName="username">
+            </mat-form-field>
+            <label *ngIf="f.username.errors?.required" class="form-validation-error" fxlayout="row">
+              Username is required
+            </label>
+
+        </div>
+        <div fxLayout="row">
+          <div fxlayout="column">
+            <mat-form-field>
+              <input matInput placeholder="Password" formControlName="password" type="password">
+            </mat-form-field><br/>
+            <label *ngIf="f.password.errors?.required" class="form-validation-error">
+              Password is required
+            </label>
+          </div>
+          <div fxlayout="column">
+            <mat-form-field>
+              <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password">
+            </mat-form-field><br/>
+            <label *ngIf="f.confirmPassword.errors?.required" class="form-validation-error">
+              Password confirmation is required
+            </label>
+          </div>
+        </div>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="First Name" formControlName="firstName">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Last Name" formControlName="lastName">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Day of Birth" formControlName="dayOfBirth">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Address" formControlName="address">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="City" formControlName="city">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="State" formControlName="state">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Zip Code" formControlName="zipCode">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Country" formControlName="country">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Phone Number" formControlName="phoneNumber">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Security Question" formControlName="securityQuestion">
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="onSubmit()">Register</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

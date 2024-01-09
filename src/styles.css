@@ -39,6 +39,44 @@ a {
 }
 
 .app-sidenav {
-  width: 270px;
+  width: auto;
   background-color: azure;
+}
+
+.toolbar-item-spacer {
+  flex: 1 1 auto;
+}
+
+.app-container {
+  height: 90%;
+  margin: 0;
+}
+
+.app-sidenav-content {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.search-bar {
+  height: 40px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-shadow: 02px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.expansion-panel {
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
 }
