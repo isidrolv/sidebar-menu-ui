@@ -11,6 +11,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {ToolBarComponent} from "./tool-bar/tool-bar.component";
 import {DynMatListItemComponent} from "./dyn-mat-list-item/dyn-mat-list-item.component";
+import {MenuService} from "../../services/menu.service";
 
 export interface MenuItem {
   id: number;
@@ -18,10 +19,12 @@ export interface MenuItem {
   icon: string;
   isRoot?: boolean | false;
   hasChildren?: boolean | false;
+  nodeLevel: number;
   isExpanded?: boolean | false;
   isShowing?: boolean | true;
   route: string;
-  children?: MenuItem[];
+  parentId?: number | null;
+  children?: MenuItem[] | null | undefined;
 }
 
 @Component({
@@ -47,41 +50,30 @@ export interface MenuItem {
   styleUrl: './sidebar-menu.component.css'
 })
 export class SidebarMenuComponent {
-  fillerNav: string[] = ['Home', 'About', 'Contact'];
   menuItems: MenuItem[] = [];
 
-  constructor() {
-    this.menuItems.push({
-      id: 1, name: 'Home', icon: 'home', isRoot: true, hasChildren: false, route: '/home', children: []
-    });
-    this.menuItems.push({
-      id: 2, name: 'About', icon: 'info', isRoot: true, hasChildren: false, route: '/about'
-    });
-    this.menuItems.push({
-      id: 3, name: 'Dashboard', icon: 'contact_mail', isRoot: true, route: '/dashboard'
-    });
-    this.menuItems.push({
-      id: 4, name: 'Lazy', icon: 'contact_mail', isRoot: true, hasChildren: true, route: '/lazy', children: [
-        {id: 41, name: 'Lazy Home', icon: 'home', isRoot: true, hasChildren: false, route: '/home'},
-        {id: 42, name: 'Lazy About', icon: 'info', isRoot: true, hasChildren: false, route: '/about'}
-      ]
-    });
-    this.menuItems.push({
-      id: 5, name: 'Contact', icon: 'contact_mail', isRoot: true, route: '/contact'
-    });
-    this.menuItems.push({
-      id: 6, name: 'Clients', icon: 'person', isRoot: true, route: '/client', hasChildren: true, children: [
-        {id: 61, name: 'Client Home', icon: 'home', isRoot: true, hasChildren: true, route: '/home', children: [
-            {id: 611, name: 'Client Home', icon: 'home', isRoot: true, hasChildren: false, route: '/home'},
-            {id: 612, name: 'Client details', icon: 'info', isRoot: true, hasChildren: true, route: '/about', children: [
-                {id: 6121, name: 'Client Details home', icon: 'home', isRoot: true, hasChildren: false, route: '/clientDetails'},
-                {id: 6122, name: 'Client About', icon: 'info', isRoot: true, hasChildren: false, route: '/about'}
-              ]},
-          ]},
-        {id: 62, name: 'Client About', icon: 'info', isRoot: true, hasChildren: false, route: '/about'}
-      ]
-    });
-
+  constructor(private menuService: MenuService) {
 
   }
+
+  ngOnInit(): void {
+    console.log('SidebarMenuComponent.ngOnInit');
+
+    this.menuService.getSideBarItems().subscribe((data: MenuItem[]) => {
+      this.menuItems = this.decorateTree(data).filter((item) => item.parentId === null); // take only root items
+      console.log(["decorated items", this.menuItems]);
+    });
+  }
+
+  private decorateTree(data: MenuItem[]): MenuItem[] {
+    console.log(data);
+    return data.map((item) => {
+      const obj: MenuItem = item;
+      obj.children = data.filter((child) => child.parentId === item.id);
+      obj.hasChildren = obj.children != null && obj.children.length > 0;
+      return obj
+    });
+
+  }
+
 }

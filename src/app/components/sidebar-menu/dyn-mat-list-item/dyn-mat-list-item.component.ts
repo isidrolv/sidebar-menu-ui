@@ -22,8 +22,15 @@ import {NgForOf, NgIf} from "@angular/common";
 })
 export class DynMatListItemComponent {
 
-  @Input() menuItems: MenuItem[] | undefined;
+  @Input() menuItems: MenuItem[] | null | undefined;
 
+  constructor() {
+    console.log('DynMatListItemComponent.constructor');
+  }
+
+  ngOnInit(): void {
+    console.log('DynMatListItemComponent.ngOnInit');
+  }
 
   isSubMenu(menuItem: MenuItem): boolean | undefined {
     return menuItem.hasChildren && menuItem.children!=null && menuItem.children.length>0
